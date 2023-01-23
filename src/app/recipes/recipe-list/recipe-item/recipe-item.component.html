@@ -1,0 +1,31 @@
+<a href="#" class="list-group-item list-group-item-action clearfix" routerLinkActive aria-current="true">
+  <div class="float-start col-md-9">
+    <h5 class="mb-1"> {{recipe.name}} </h5>
+    <!-- d-flex w-100 justify-content-between <small>3 days ago</small> -->
+    <p class="mb-1">{{recipe.description}} </p>
+  </div>
+
+
+  <div class="float-end col-md-3 pt-2">
+    <img class="img-thumbnail" [src]="recipe.imagePath" alt="{{recipe.name}}" title="{{recipe.name}}"
+      style="max-height: 60px;" title="{{recipe.name}}">
+  </div>
+  <!-- <small>And some small print.</small> -->
+</a>
+
+
+<!-- <div class="row">
+  <div class="col col-xs-12">
+    <a href="#" class="list-group-item clearfix">
+      <div class="float-start">
+        <h4 class="list-group-item-info">{{recipe.name}} </h4>
+        <p class="text-opacity-25">
+          {{recipe.description}}
+        </p>
+      </div>
+      <span class="float-end">
+        <img [src]="recipe.imagePath" class="img-fluid" alt="">
+      </span>
+    </a>
+  </div>
+</div> -->
