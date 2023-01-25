@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
+import { Recipe } from '../recipe.model';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class RecipeDetailComponent {
 
+  @Input()
+  recipe: Recipe;
+
+
+  // onRecipeSelected(recipe: Recipe) {
+  //   console.log('recipe selected (onRecipeSelected): ', recipe);
+  //   this.recipe = recipe;
+  // }
 }

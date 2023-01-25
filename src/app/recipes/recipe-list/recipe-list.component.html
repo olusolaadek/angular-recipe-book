@@ -4,6 +4,8 @@
   </div>
 </div>
 <!-- display list of recipes -->
+<div></div>
 <div class="list-group mt-3">
-  <app-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe"></app-recipe-item>
+  <app-recipe-item *ngFor="let recipeEl of recipes" [recipe]="recipeEl"
+    (recipeSelected)="onRecipeSelected(recipeEl)"></app-recipe-item>
 </div>
