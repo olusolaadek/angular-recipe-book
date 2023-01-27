@@ -12,8 +12,14 @@ export class ShoppingListComponent implements OnInit {
     new Ingredient('Tomatoes', 10)
   ];
 
+
   ngOnInit(): void {
 
+  }
+
+  onReceivedIngredient(ingredient: Ingredient): void {
+    this.ingredients.push(ingredient);
+    console.log('Received ingredient: ', ingredient);
   }
 
 }
