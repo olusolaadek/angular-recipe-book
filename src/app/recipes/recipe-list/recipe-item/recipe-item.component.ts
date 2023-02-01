@@ -10,6 +10,7 @@ import { RecipeService } from '../../recipe.service';
 export class RecipeItemComponent {
 
   @Input() recipe: Recipe;
+  @Input() index: number;
   // @Output() recipeSelected = new EventEmitter<Recipe>();
   // 1. receice binded property recipe
   // 2. click a recipe
@@ -19,9 +20,9 @@ export class RecipeItemComponent {
   ) {
 
   }
-  onSelected() {
-    //  console.log('selectRecipe (RecipeItemComponent)', recipe)
-    this.recipeService.recipeSelected.emit(this.recipe);
-  }
+  // onSelected() {
+  //   //  console.log('selectRecipe (RecipeItemComponent)', recipe)
+  //   this.recipeService.recipeSelected.emit(this.recipe);
+  // }
 
 }
