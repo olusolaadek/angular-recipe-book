@@ -4,29 +4,42 @@ import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RecipeService {
-
-  constructor() { }
+  constructor() {}
 
   // recipeSelected = new Subject<Recipe>();
   // recipeSelected = new EventEmitter<Recipe>();
+  recipesChanged = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
-    new Recipe('Basic White Rice Recipe',
+    new Recipe(
+      'Basic White Rice Recipe',
       `Basic White Rice Recipe`,
       'https://www.relish.com/image-resizer/fit=cover,f=auto,w=412/https://www.thespruceeats.com/thmb/bF8lW-24nQMOaEWNajRfK97hA60=/2848x2848/smart/filters:no_upscale()/how-to-make-basic-white-rice-2355883-10-5b0da96eba6177003622896e.jpg',
-      [new Ingredient('cup long-grain white rice', 1), new Ingredient('cups of water', 2), new Ingredient('teaspoon salt', 0.5)]
+      [
+        new Ingredient('cup long-grain white rice', 1),
+        new Ingredient('cups of water', 2),
+        new Ingredient('teaspoon salt', 0.5),
+      ]
     ),
-    new Recipe('Chicken sauce recipe',
+    new Recipe(
+      'Chicken sauce recipe',
       'This is a test recipe two',
       'https://images-gmi-pmc.edge-generalmills.com/75a7343a-1520-4e95-a13f-e61b5fc5b741.jpg',
-      [new Ingredient('chicken breasts', 2), new Ingredient('red bell pepper', 1), new Ingredient('Carrot', 2)]),
-    new Recipe('Pounded yam',
+      [
+        new Ingredient('chicken breasts', 2),
+        new Ingredient('red bell pepper', 1),
+        new Ingredient('Carrot', 2),
+      ]
+    ),
+    new Recipe(
+      'Pounded yam',
       'Pounded yam served with a egusi soup, stork fish and bokoto.',
       'https://desirerecipes.com/wp-content/uploads/2022/02/image-24.jpg.webp',
-      [new Ingredient('Tuber of Yam', 1)])
+      [new Ingredient('Tuber of Yam', 1)]
+    ),
   ];
 
   getRecipes() {
@@ -36,5 +49,24 @@ export class RecipeService {
     //  console.log(this.recipes[index]);
     return this.recipes[index];
   }
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
+  updateRecipe(index, newRecipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteIngredient(recipeIndex: number, ingredientIndex: number) {
+    console.log(recipeIndex, ingredientIndex);
+    this.recipes[recipeIndex].ingredients[ingredientIndex] = null;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 }

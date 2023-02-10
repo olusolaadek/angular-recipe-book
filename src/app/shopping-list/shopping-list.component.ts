@@ -6,31 +6,33 @@ import { ShoppingListService } from './shopping-list.service';
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  styleUrls: ['./shopping-list.component.css'],
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
   ingredientsChangedSubject: Subscription;
 
-  constructor(
-    private shoppingListSvc: ShoppingListService
-  ) {
-
-  }
+  constructor(private shoppingListSvc: ShoppingListService) {}
   ngOnDestroy(): void {
     this.ingredientsChangedSubject.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.ingredients = this.shoppingListSvc.getIngredients()
-    this.ingredientsChangedSubject = this.shoppingListSvc.ingredientsChanged.subscribe((ingredients: Ingredient[]) => {
-      this.ingredients = ingredients
-    })
+    this.ingredients = this.shoppingListSvc.getIngredients();
+    this.ingredientsChangedSubject =
+      this.shoppingListSvc.ingredientsChanged.subscribe(
+        (ingredients: Ingredient[]) => {
+          this.ingredients = ingredients;
+        }
+      );
+  }
+
+  onEditItem(index: number): void {
+    this.shoppingListSvc.startedEditing.next(index);
   }
 
   // onReceivedIngredient(ingredient: Ingredient): void {
   //   this.ingredients.push(ingredient);
   //   console.log('Received ingredient: ', ingredient);
   // }
-
 }

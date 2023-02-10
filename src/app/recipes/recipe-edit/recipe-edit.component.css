@@ -1,0 +1,5 @@
+input.ng-invalid:not(form).ng-touched,
+select.ng-invalid:not(form).ng-touched,
+textarea.ng-invalid:not(form).ng-touched {
+  border: 1px solid red;
+}
