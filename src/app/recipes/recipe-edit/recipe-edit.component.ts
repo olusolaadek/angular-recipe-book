@@ -71,12 +71,6 @@ export class RecipeEditComponent implements OnInit {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
-  onDeleteIngredient(index) {
-    //  this.recipeService.deleteIngredient(this.id, index);
-    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
-    this.onSave();
-  }
-
   onSave(): void {
     const newRecipe: Recipe = new Recipe(
       this.recipeForm.value?.name,
@@ -93,7 +87,7 @@ export class RecipeEditComponent implements OnInit {
 
     console.log(this.recipeForm.value);
 
-    this.onCancel();
+    // this.onCancel();
   }
 
   onAddIngredient() {
@@ -107,7 +101,11 @@ export class RecipeEditComponent implements OnInit {
       })
     );
   }
-
+  onRemoveIngredient(index) {
+    //  this.recipeService.deleteIngredient(this.id, index);
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
+    this.onSave();
+  }
   onRemoveAllIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).clear();
     this.onSave();
