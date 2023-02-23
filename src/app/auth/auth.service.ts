@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { API_KEY } from '../secrets/api-secrets';
 import { User } from './user.model';
@@ -29,6 +30,7 @@ export interface AuthResponseData {
 export class AuthService {
   //
   user = new BehaviorSubject<User>(null);
+  tokenExpirationTimer: any = null;
   //
 
   signUpApiUrl =
@@ -37,11 +39,18 @@ export class AuthService {
     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
     API_KEY;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
   //
   logout() {
-    localStorage.setItem('userData', null);
     this.user.next(null);
+    this.router.navigate(['/auth']);
+    localStorage.removeItem('userData');
+    // localStorage.clear();
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+
+    this.tokenExpirationTimer = null;
   }
   //
   private handleAuthentication(
@@ -54,6 +63,7 @@ export class AuthService {
     //
     const user = new User(email, id, token, expirationDate);
     this.user.next(user);
+    this.autoLogout(expiresIn * 1000);
     // store the user data
     localStorage.setItem('userData', JSON.stringify(user));
 
@@ -80,7 +90,18 @@ export class AuthService {
     );
     if (loadedUser.token) {
       this.user.next(loadedUser);
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLogout(expirationDuration); // calculate the remaining time to expiration
     }
+  }
+  //
+  autoLogout(expirationDuration: number) {
+    console.log(expirationDuration);
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
   //
   private handleError(errResponse: HttpErrorResponse) {
