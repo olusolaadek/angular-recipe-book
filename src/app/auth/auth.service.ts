@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
+import { API_KEY } from '../secrets/api-secrets';
 import { User } from './user.model';
 
 export interface AuthResponseData {
@@ -31,9 +32,10 @@ export class AuthService {
   //
 
   signUpApiUrl =
-    'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBXWwH3Dt5MGTA2DD7kfrbC8K9Zq0IqG0Q';
+    'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY;
   signInApiUrl =
-    'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBXWwH3Dt5MGTA2DD7kfrbC8K9Zq0IqG0Q';
+    'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
+    API_KEY;
 
   constructor(private http: HttpClient) {}
   //
