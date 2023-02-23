@@ -1,7 +1,10 @@
 # CourseProject
+This is a complete angular project that demonstrate features of angular framework including but not limited to Components, Templates and styling, Pipes, Directives, Services and DI, HttpClient, Routes, and Authentication
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.5.
-
+## Key Notes
+### Interceptor
+This is used to modify http request headers
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

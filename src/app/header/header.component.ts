@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
@@ -24,7 +25,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataSvc: DataStorageService,
-    private authService: AuthService // private recipeSvc: RecipeService
+    private authService: AuthService, // private recipeSvc: RecipeService
+    private router: Router
   ) {}
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
@@ -58,5 +60,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataSvc.fetchRecipes().subscribe((recipes) => {
       // this.recipeSvc.setRecipes(recipes);
     });
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/auth']);
   }
 }

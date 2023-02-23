@@ -41,7 +41,12 @@
           >
         </li>
         <li class="nav-item" *ngIf="isAuthenticated">
-          <a class="nav-link pe-auto" style="cursor: pointer">Logout</a>
+          <a
+            class="nav-link pe-auto"
+            style="cursor: pointer"
+            (click)="onLogout()"
+            >Logout</a
+          >
         </li>
 
         <li

@@ -36,7 +36,12 @@ export class AuthService {
     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBXWwH3Dt5MGTA2DD7kfrbC8K9Zq0IqG0Q';
 
   constructor(private http: HttpClient) {}
-  ///
+  //
+  logout() {
+    localStorage.setItem('userData', null);
+    this.user.next(null);
+  }
+  //
   private handleAuthentication(
     email: string,
     id: string,
@@ -47,8 +52,33 @@ export class AuthService {
     //
     const user = new User(email, id, token, expirationDate);
     this.user.next(user);
+    // store the user data
+    localStorage.setItem('userData', JSON.stringify(user));
 
     console.log('user: ', user);
+  }
+  //
+  autoLogin() {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('userData'));
+
+    if (!userData) {
+      return;
+    }
+
+    const loadedUser = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+    }
   }
   //
   private handleError(errResponse: HttpErrorResponse) {
